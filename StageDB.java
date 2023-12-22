@@ -49,8 +49,8 @@ class StageDB {
                 Media m = new Media(new File(gameOverSoundFileName).toURI().toString());
                 MediaPlayer mp = new MediaPlayer(m);
                 mp.setCycleCount(MediaPlayer.INDEFINITE);
-                mp.setRate(1.0);
-                mp.setVolume(0.5);
+                mp.setRate(0.05);
+                mp.setVolume(1.0);
                 gameOverSound = mp;
             } catch (Exception io) {
                 System.err.print(io.getMessage());
