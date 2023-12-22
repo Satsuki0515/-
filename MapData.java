@@ -6,8 +6,9 @@ public class MapData {
     public static final int TYPE_WALL = 1;
     public static final int TYPE_OTHERS = 2;
     private static final String mapImageFiles[] = {
-            "png/SPACE.png",
-            "png/WALL.png"
+            "GameImage/Space.png",
+            "GameImage/BrickWall.png",
+            "GameImage/BrickWallForSpecial.png"
     };
 
     private Image[] mapImages;
@@ -57,11 +58,26 @@ public class MapData {
         for (int i = 0; i < dl.length; i ++) {
             int dx = dl[i][0];
             int dy = dl[i][1];
-            if (getMap(x + dx * 2, y + dy * 2) == MapData.TYPE_WALL) {
+            if (getMap(x + dx * 2, y + dy * 2) == MapData.TYPE_WALL && 
+                isAdjacentToSpace(x + dx, y + dy)) {
                 setMap(x + dx, y + dy, MapData.TYPE_SPACE);
                 digMap(x + dx * 2, y + dy * 2);
             }
         }
+    }
+
+    private boolean isAdjacentToSpace (int x, int y) {
+        int[][] directions = { { 0, 1 }, { 0, -1 }, { -1, 0 }, { 1, 0 } };
+
+        for (int[] dir : directions) {
+            int dx = dir[0];
+            int dy = dir[1];
+            if (getMap(x + dx, y + dy) == MapData.TYPE_OTHERS) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public int getMap(int x, int y) {
