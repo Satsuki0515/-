@@ -1,25 +1,19 @@
-import java.io.IOException;
-import java.io.File;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.Scene;  // 追加
+import java.io.File;  // 追加
+import javafx.scene.layout.VBox;
+import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import java.io.IOException;
 
-class StageDB {
-
+public class StageDB {
     static private Stage mainStage = null;
     static private Stage gameOverStage = null;
     static private MediaPlayer mainSound = null;
     static private MediaPlayer gameOverSound = null;
     static private Class mainClass;
-    static private final String mainSoundFileName = "sound/JoyToTheWorld.mp3"; // BGM by OtoLogic
+    static private final String mainSoundFileName = "sound/JoyToTheWorld.mp3";
 
     public static void setMainClass(Class mainClass) {
         StageDB.mainClass = mainClass;
@@ -30,23 +24,30 @@ class StageDB {
             try {
                 Media m = new Media(new File(mainSoundFileName).toURI().toString());
                 MediaPlayer mp = new MediaPlayer(m);
-                mp.setCycleCount(MediaPlayer.INDEFINITE); // loop play
-                mp.setRate(1.0); // 1.0 = normal speed
-                mp.setVolume(0.5); // volume from 0.0 to 1.0
+                mp.setCycleCount(MediaPlayer.INDEFINITE);
+                mp.setRate(1.0);
+                mp.setVolume(0.5);
                 mainSound = mp;
             } catch (Exception io) {
                 System.err.print(io.getMessage());
+                mainSound = new MediaPlayer(new Media(""));
             }
         }
         return mainSound;
     }
 
+    public static void setMainSound(MediaPlayer mediaPlayer) {
+        mainSound = mediaPlayer;
+    }
+
     public static MediaPlayer getGameOverSound() {
         if (gameOverSound == null) {
             try {
-                // please write down the code for playing gameover sound
+                // 例外が発生した場合もgameOverSoundを初期化
+                gameOverSound = new MediaPlayer(new Media(""));
             } catch (Exception io) {
                 System.err.print(io.getMessage());
+                gameOverSound = new MediaPlayer(new Media(""));
             }
         }
         return gameOverSound;

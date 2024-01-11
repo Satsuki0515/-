@@ -5,10 +5,13 @@ public class MapData {
     public static final int TYPE_SPACE = 0;
     public static final int TYPE_WALL = 1;
     public static final int TYPE_OTHERS = 2;
+    public static final int TYPE_ITEM = 3; // 新しいアイテムの定数
     private static final String mapImageFiles[] = {
             "png/SPACE.png",
             "png/WALL.png"
     };
+
+    private static final String ITEM_IMAGE_FILE = "GameImage/Heart.png"; // アイテム画像のファイルパス
 
     private Image[] mapImages;
     private ImageView[][] mapImageViews;
@@ -19,7 +22,7 @@ public class MapData {
     MapData(int x, int y) {
         mapImages = new Image[2];
         mapImageViews = new ImageView[y][x];
-        for (int i = 0; i < 2; i ++) {
+        for (int i = 0; i < 2; i++) {
             mapImages[i] = new Image(mapImageFiles[i]);
         }
 
@@ -29,12 +32,31 @@ public class MapData {
 
         fillMap(MapData.TYPE_WALL);
         digMap(1, 3);
+        placeItem(10, 5); // アイテムを設置
+
         setImageViews();
     }
 
-    // fill two-dimentional arrays with a given number (maps[y][x])
+    // 新しいアイテムを指定された座標に設置するメソッド
+    public void placeItem(int x, int y) {
+        setMap(x, y, MapData.TYPE_ITEM);
+        mapImageViews[y][x] = new ImageView(new Image(ITEM_IMAGE_FILE));
+    }
+
+    // セルがアイテムかどうかを確認するメソッド
+    public boolean isItemAt(int x, int y) {
+        return getMap(x, y) == MapData.TYPE_ITEM;
+    }
+
+    // アイテムを取得したときに呼び出されるメソッド
+    public void pickUpItem(int x, int y) {
+        setMap(x, y, MapData.TYPE_SPACE);
+        mapImageViews[y][x] = new ImageView(new Image(mapImageFiles[0])); // 空のセルに戻す
+    }
+
+    // fill two-dimensional arrays with a given number (maps[y][x])
     private void fillMap(int type) {
-        for (int y = 0; y < height; y ++) {
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 maps[y][x] = type;
             }
@@ -44,17 +66,17 @@ public class MapData {
     // dig walls for making roads
     private void digMap(int x, int y) {
         setMap(x, y, MapData.TYPE_SPACE);
-        int[][] dl = { { 0, 1 }, { 0, -1 }, { -1, 0 }, { 1, 0 } };
+        int[][] dl = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
         int[] tmp;
 
-        for (int i = 0; i < dl.length; i ++) {
+        for (int i = 0; i < dl.length; i++) {
             int r = (int) (Math.random() * dl.length);
             tmp = dl[i];
             dl[i] = dl[r];
             dl[r] = tmp;
         }
 
-        for (int i = 0; i < dl.length; i ++) {
+        for (int i = 0; i < dl.length; i++) {
             int dx = dl[i][0];
             int dy = dl[i][1];
             if (getMap(x + dx * 2, y + dy * 2) == MapData.TYPE_WALL) {
@@ -83,7 +105,7 @@ public class MapData {
     }
 
     public void setImageViews() {
-        for (int y = 0; y < height; y ++) {
+        for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 mapImageViews[y][x] = new ImageView(mapImages[maps[y][x]]);
             }
@@ -98,3 +120,4 @@ public class MapData {
         return width;
     }
 }
+

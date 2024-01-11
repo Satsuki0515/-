@@ -24,8 +24,8 @@ public class MapGameController implements Initializable {
         mapData = new MapData(21, 15);
         chara = new MoveChara(1, 1, mapData);
         mapImageViews = new ImageView[mapData.getHeight() * mapData.getWidth()];
-        for (int y = 0; y < mapData.getHeight(); y ++) {
-            for (int x = 0; x < mapData.getWidth(); x ++) {
+        for (int y = 0; y < mapData.getHeight(); y++) {
+            for (int x = 0; x < mapData.getWidth(); x++) {
                 int index = y * mapData.getWidth() + x;
                 mapImageViews[index] = mapData.getImageView(x, y);
             }
@@ -38,8 +38,8 @@ public class MapGameController implements Initializable {
         int cx = c.getPosX();
         int cy = c.getPosY();
         mapGrid.getChildren().clear();
-        for (int y = 0; y < mapData.getHeight(); y ++) {
-            for (int x = 0; x < mapData.getWidth(); x ++) {
+        for (int y = 0; y < mapData.getHeight(); y++) {
+            for (int x = 0; x < mapData.getWidth(); x++) {
                 int index = y * mapData.getWidth() + x;
                 if (x == cx && y == cy) {
                     mapGrid.add(c.getCharaImageView(), x, y);
@@ -69,32 +69,51 @@ public class MapGameController implements Initializable {
     public void upButtonAction() {
         printAction("UP");
         chara.setCharaDirection(MoveChara.TYPE_UP);
-        chara.move(0, -1);
-        drawMap(chara, mapData);
+        if (chara.move(0, -1)) {
+            handleItemPickup(); // アイテム取得の処理
+            drawMap(chara, mapData);
+        }
     }
 
     // Operations for going the cat down
     public void downButtonAction() {
         printAction("DOWN");
         chara.setCharaDirection(MoveChara.TYPE_DOWN);
-        chara.move(0, 1);
-        drawMap(chara, mapData);
+        if (chara.move(0, 1)) {
+            handleItemPickup(); // アイテム取得の処理
+            drawMap(chara, mapData);
+        }
     }
 
-    // Operations for going the cat right
+    // Operations for going the cat left
     public void leftButtonAction() {
         printAction("LEFT");
         chara.setCharaDirection(MoveChara.TYPE_LEFT);
-        chara.move(-1, 0);
-        drawMap(chara, mapData);
+        if (chara.move(-1, 0)) {
+            handleItemPickup(); // アイテム取得の処理
+            drawMap(chara, mapData);
+        }
     }
 
     // Operations for going the cat right
     public void rightButtonAction() {
         printAction("RIGHT");
         chara.setCharaDirection(MoveChara.TYPE_RIGHT);
-        chara.move(1, 0);
-        drawMap(chara, mapData);
+        if (chara.move(1, 0)) {
+            handleItemPickup(); // アイテム取得の処理
+            drawMap(chara, mapData);
+        }
+    }
+
+    // アイテム取得の処理
+    private void handleItemPickup() {
+        int charaX = chara.getPosX();
+        int charaY = chara.getPosY();
+
+        if (mapData.isItemAt(charaX, charaY)) {
+            mapData.pickUpItem(charaX, charaY);
+            System.out.println("Picked up an item!");
+        }
     }
 
     @FXML
@@ -128,5 +147,4 @@ public class MapGameController implements Initializable {
     public void printAction(String actionString) {
         System.out.println("Action: " + actionString);
     }
-
 }

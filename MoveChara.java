@@ -1,6 +1,5 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import javafx.animation.AnimationTimer;
 
 public class MoveChara {
@@ -8,6 +7,7 @@ public class MoveChara {
     public static final int TYPE_LEFT = 1;
     public static final int TYPE_RIGHT = 2;
     public static final int TYPE_UP = 3;
+    public static final int TYPE_ITEM = 3; // 新しいアイテムの定数
 
     private final String[] directions = { "Down", "Left", "Right", "Up" };
     private final String[] animationNumbers = { "1", "2", "3" };
@@ -61,12 +61,19 @@ public class MoveChara {
         }
     }
 
+    // ... (既存のメソッドやコード)
+
     // check whether the cat can move on
     private boolean isMovable(int dx, int dy) {
-        if (mapData.getMap(posX + dx, posY + dy) == MapData.TYPE_WALL) {
+        int newPosX = posX + dx;
+        int newPosY = posY + dy;
+
+        if (mapData.getMap(newPosX, newPosY) == MapData.TYPE_WALL) {
             return false;
-        } else if (mapData.getMap(posX + dx, posY + dy) == MapData.TYPE_SPACE) {
+        } else if (mapData.getMap(newPosX, newPosY) == MapData.TYPE_SPACE) {
             return true;
+        } else if (mapData.getMap(newPosX, newPosY) == MapData.TYPE_ITEM) {
+            return true; // アイテムがある場合も移動可能とする
         }
         return false;
     }
@@ -76,7 +83,7 @@ public class MoveChara {
         if (isMovable(dx, dy)) {
             posX += dx;
             posY += dy;
-	    System.out.println("chara[X,Y]:" + posX + "," + posY);
+            System.out.println("chara[X,Y]:" + posX + "," + posY);
             return true;
         } else {
             return false;
@@ -97,6 +104,13 @@ public class MoveChara {
     public int getPosY() {
         return posY;
     }
+
+    // セルがアイテムかどうかを確認するメソッド
+    public boolean isItemAt(int x, int y) {
+        return mapData.isItemAt(x, y);
+    }
+
+    // ... (既存のメソッドやコード)
 
     // Show the cat animation
     private class ImageAnimation extends AnimationTimer {
@@ -141,3 +155,4 @@ public class MoveChara {
         }
     }
 }
+
