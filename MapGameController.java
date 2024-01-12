@@ -20,23 +20,10 @@ public class MapGameController implements Initializable {
   public GridPane mapGrid;
   public ImageView[] mapImageViews;
 
-  @Override
-  public void initialize(URL url, ResourceBundle rb) {
-    mapData = new MapData(21, 15);
-    chara = new MoveChara(1, 1, mapData);
-
-    // Set the goal position (adjust x and y values accordingly)
-    mapData.setGoal(19, 13);
-
-    mapImageViews = new ImageView[mapData.getHeight() * mapData.getWidth()];
-    for (int y = 0; y < mapData.getHeight(); y++) {
-      for (int x = 0; x < mapData.getWidth(); x++) {
-        int index = y * mapData.getWidth() + x;
-        mapImageViews[index] = mapData.getImageView(x, y);
-      }
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        initializeMap();
     }
-    drawMap(chara, mapData);
-  }
 
   // Draw the map
   //changed code
@@ -124,16 +111,37 @@ public class MapGameController implements Initializable {
             System.out.println(ex.getMessage());
         }
     }
-
-  @FXML
-  public void func2ButtonAction(ActionEvent event) {
-    System.out.println("func2: Nothing to do");
-  }
-
-  @FXML
-  public void func3ButtonAction(ActionEvent event) {
-    System.out.println("func3: Nothing to do");
-  }
+    
+    @FXML
+    public void func2ButtonAction(ActionEvent event) {
+        try {
+            initializeMap();
+            System.out.println("func2: Recreate new map");
+            
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            
+        }
+        
+    }
+    private void initializeMap() {
+        mapData = new MapData(21, 15);
+        chara = new MoveChara(1, 1, mapData);
+        // Set the goal position (adjust x and y values accordingly)
+        mapData.setGoal(19, 13);
+        mapImageViews = new ImageView[mapData.getHeight() * mapData.getWidth()];
+        for (int y = 0; y < mapData.getHeight(); y++) {
+            for (int x = 0; x < mapData.getWidth(); x++) {
+                int index = y * mapData.getWidth() + x;
+                mapImageViews[index] = mapData.getImageView(x, y);
+            }
+        }
+        drawMap(chara, mapData);
+    }
+    @FXML
+    public void func3ButtonAction(ActionEvent event) {
+        System.out.println("func3: Nothing to do");
+    }
 
   @FXML
   public void func4ButtonAction(ActionEvent event) {

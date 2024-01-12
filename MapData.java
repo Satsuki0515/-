@@ -1,5 +1,6 @@
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import java.util.Random;
 
 public class MapData {
     public static final int TYPE_SPACE = 0;
@@ -13,8 +14,8 @@ public class MapData {
     }
 
     private static final String mapImageFiles[] = {
-            "png/SPACE.png",
-            "png/WALL.png"
+            "GameImage/Space.png",
+            "GameImage/BrickWall.png"
     };
 
     private Image[] mapImages;
@@ -34,11 +35,15 @@ public class MapData {
         height = y;
         maps = new int[y][x];
 
-        fillMap(MapData.TYPE_WALL);
-        digMap(1, 3);
+        recreateNewMap();
+
         setImageViews();
     }
 
+    public void recreateNewMap() {
+         fillMap(MapData.TYPE_WALL);
+        digMap(1, 3, new Random());
+    }
     // fill two-dimentional arrays with a given number (maps[y][x])
     private void fillMap(int type) {
         for (int y = 0; y < height; y ++) {
@@ -49,13 +54,13 @@ public class MapData {
     }
 
     // dig walls for making roads
-    private void digMap(int x, int y) {
+    private void digMap(int x, int y, Random random) {
         setMap(x, y, MapData.TYPE_SPACE);
         int[][] dl = { { 0, 1 }, { 0, -1 }, { -1, 0 }, { 1, 0 } };
         int[] tmp;
 
         for (int i = 0; i < dl.length; i ++) {
-            int r = (int) (Math.random() * dl.length);
+            int r = random.nextInt(dl.length);
             tmp = dl[i];
             dl[i] = dl[r];
             dl[r] = tmp;
@@ -66,11 +71,12 @@ public class MapData {
             int dy = dl[i][1];
             if (getMap(x + dx * 2, y + dy * 2) == MapData.TYPE_WALL) {
                 setMap(x + dx, y + dy, MapData.TYPE_SPACE);
-                digMap(x + dx * 2, y + dy * 2);
+                digMap(x + dx * 2, y + dy * 2, random);
             }
         }
     }
 
+    
     public int getMap(int x, int y) {
         if (x < 0 || width <= x || y < 0 || height <= y) {
             return -1;
