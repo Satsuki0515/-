@@ -10,7 +10,7 @@ public class GameOverController {
 	void onGameOverAction(ActionEvent event) {
 		try {
 			StageDB.getGameOverStage().hide();
-			StageDB.getMainSound().stop();
+			StageDB.getGameOverSound().stop();
 			StageDB.getMainStage().show();
 			StageDB.getMainSound().play();
 		} catch (Exception ex) {
