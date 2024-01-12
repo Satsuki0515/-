@@ -112,17 +112,18 @@ public class MapGameController implements Initializable {
     drawMap(chara, mapData);
   }
 
-  @FXML
-  public void func1ButtonAction(ActionEvent event) {
-    try {
-      System.out.println("func1");
-      StageDB.getMainStage().hide();
-      StageDB.getMainSound().stop();
-      StageDB.getGameOverStage().show();
-    } catch (Exception ex) {
-      System.out.println(ex.getMessage());
+    @FXML
+    public void func1ButtonAction(ActionEvent event) {
+        try {
+            System.out.println("func1");
+            StageDB.getMainStage().hide();
+            StageDB.getMainSound().stop();
+            StageDB.getGameOverStage().show();
+            StageDB.getGameOverSound().play();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
-  }
 
   @FXML
   public void func2ButtonAction(ActionEvent event) {

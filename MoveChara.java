@@ -10,10 +10,10 @@ public class MoveChara {
   public static final int TYPE_RIGHT = 2;
   public static final int TYPE_UP = 3;
 
-  private final String[] directions = { "Down", "Left", "Right", "Up" };
-  private final String[] animationNumbers = { "1", "2", "3" };
-  private final String pngPathPre = "png/cat";
-  private final String pngPathSuf = ".png";
+    private final String[] directions = { "Down", "Left", "Right", "Up" };
+    private final String[] animationNumbers = { "1", "2", "3" };
+    private final String pngPathPre = "png/otaku";
+    private final String pngPathSuf = ".png";
 
   private int posX;
   private int posY;
