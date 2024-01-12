@@ -11,7 +11,7 @@ public class MoveChara {
 
     private final String[] directions = { "Down", "Left", "Right", "Up" };
     private final String[] animationNumbers = { "1", "2", "3" };
-    private final String pngPathPre = "GameImage/otaku";
+    private final String pngPathPre = "png/otaku";
     private final String pngPathSuf = ".png";
 
     private int posX;
