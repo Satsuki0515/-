@@ -111,7 +111,11 @@ public class MapGameController implements Initializable {
     @FXML
     public void func1ButtonAction(ActionEvent event) {
         try {
-            System.out.println("func1");
+            System.out.println("func1: GameOver");
+            chara.decreaseHealth(); // キャラクターの残機を減らす
+            if (chara.getHealth() < 0) {
+              MapGame.isGameOver = true;
+            }
             StageDB.getMainStage().hide();
             StageDB.getMainSound().stop();
             StageDB.getGameOverStage().show();

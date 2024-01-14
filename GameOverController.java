@@ -11,6 +11,7 @@ public class GameOverController {
 		try {
 			StageDB.getGameOverStage().hide();
 			StageDB.getGameOverSound().stop();
+			if (MapGame.isGameOver) return;
 			StageDB.getMainStage().show();
 			StageDB.getMainSound().play();
 		} catch (Exception ex) {
