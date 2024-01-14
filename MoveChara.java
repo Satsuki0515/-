@@ -97,6 +97,7 @@ public class MoveChara {
       // キャラクターとアイテムの接触を判定する
       if (mapData.getMap(posX, posY) == MapData.TYPE_ITEM) {
         System.out.println("Got an item!");
+        health++; // 残機を追加
         StageDB.getItemGetSound().play();
         // アイテムをマップ上から削除
         mapData.setMap(posX, posY, MapData.TYPE_SPACE);
