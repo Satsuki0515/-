@@ -1,4 +1,4 @@
 *.class
 .vscode/
-.png/*:ZoneIdentifier
-.sound/*:ZoneIdentifier
+.png/*Zone.Identifier
+.sound/*Zone.Identifier
