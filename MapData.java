@@ -8,11 +8,6 @@ public class MapData {
     public static final int TYPE_OTHERS = 2;
     public static final int TYPE_GOAL = 3; // Add a new constant for the goal
 
-    // Add a method to set the goal position
-    public void setGoal(int x, int y) {
-        setMap(x, y, MapData.TYPE_GOAL);
-    }
-
     private static final String mapImageFiles[] = {
             "GameImage/Space.png",
             "GameImage/BrickWall.png"
@@ -101,6 +96,11 @@ public class MapData {
                 mapImageViews[y][x] = new ImageView(mapImages[maps[y][x]]);
             }
         }
+    }
+
+    // Add a method to set the goal position
+    public void setGoal(int x, int y) {
+        setMap(x, y, MapData.TYPE_GOAL);
     }
 
     public int getHeight() {
