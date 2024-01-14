@@ -18,6 +18,8 @@ public class MoveChara {
   private int posX;
   private int posY;
 
+  private int health;
+
   private MapData mapData;
 
   private Image[][] charaImages;
@@ -48,6 +50,8 @@ public class MoveChara {
 
     posX = startX;
     posY = startY;
+
+    health = 1;
 
     setCharaDirection(TYPE_RIGHT); // start with right-direction
   }
