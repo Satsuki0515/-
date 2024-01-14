@@ -73,7 +73,8 @@ public class MoveChara {
       return false;
     } else if (
       mapData.getMap(nextX, nextY) == MapData.TYPE_SPACE ||
-      mapData.getMap(nextX, nextY) == MapData.TYPE_GOAL
+      mapData.getMap(nextX, nextY) == MapData.TYPE_GOAL ||
+      mapData.getMap(nextX, nextY) == MapData.TYPE_ITEM
     ) {
       return true;
     }
