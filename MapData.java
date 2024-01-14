@@ -5,17 +5,13 @@ import java.util.Random;
 public class MapData {
     public static final int TYPE_SPACE = 0;
     public static final int TYPE_WALL = 1;
-    public static final int TYPE_OTHERS = 2;
+    public static final int TYPE_ITEM = 2;
     public static final int TYPE_GOAL = 3; // Add a new constant for the goal
-
-    // Add a method to set the goal position
-    public void setGoal(int x, int y) {
-        setMap(x, y, MapData.TYPE_GOAL);
-    }
 
     private static final String mapImageFiles[] = {
             "GameImage/Space.png",
-            "GameImage/BrickWall.png"
+            "GameImage/BrickWall.png",
+            "GameImage/Heart.png"
     };
 
     private Image[] mapImages;
@@ -25,9 +21,9 @@ public class MapData {
     private int height; // height of the map
 
     MapData(int x, int y) {
-        mapImages = new Image[2];
+        mapImages = new Image[mapImageFiles.length];
         mapImageViews = new ImageView[y][x];
-        for (int i = 0; i < 2; i ++) {
+        for (int i = 0; i < mapImages.length; i ++) {
             mapImages[i] = new Image(mapImageFiles[i]);
         }
 
@@ -43,6 +39,11 @@ public class MapData {
     public void recreateNewMap() {
          fillMap(MapData.TYPE_WALL);
         digMap(1, 3, new Random());
+
+        // アイテムを2，3個おく
+        Random rand = new Random();
+        int itemNum = rand.nextInt(2) + 2;
+        placeItem(itemNum);
     }
     // fill two-dimentional arrays with a given number (maps[y][x])
     private void fillMap(int type) {
@@ -98,8 +99,27 @@ public class MapData {
     public void setImageViews() {
         for (int y = 0; y < height; y ++) {
             for (int x = 0; x < width; x++) {
+                if (maps[y][x] == TYPE_GOAL) continue; // ゴールの描画処理は他と少し違う処理をしているため、飛ばす
                 mapImageViews[y][x] = new ImageView(mapImages[maps[y][x]]);
             }
+        }
+    }
+
+    // Add a method to set the goal position
+    public void setGoal(int x, int y) {
+        setMap(x, y, MapData.TYPE_GOAL);
+    }
+
+    public void placeItem(int itemNum) {
+        Random rand = new Random();
+        int counter = 0;
+        while (counter < itemNum) {
+            int rx = rand.nextInt(width - 2) + 1;
+            int ry = rand.nextInt(height - 2) + 1;
+            // マップ内のいずれかのSPACEをITEMに置き換える
+            if (maps[ry][rx] != TYPE_SPACE || (rx == 1 && ry == 1)) continue;
+            setMap(rx, ry, TYPE_ITEM);
+            counter++;
         }
     }
 

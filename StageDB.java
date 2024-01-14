@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.ArrayList;
 import java.io.File;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -18,12 +19,29 @@ class StageDB {
     static private Stage gameOverStage = null;
     static private MediaPlayer mainSound = null;
     static private MediaPlayer gameOverSound = null;
+    static private ArrayList<MediaPlayer> itemGetSound = new ArrayList<>();
     static private Class mainClass;
     static private final String mainSoundFileName = "sound/JoyToTheWorld.mp3"; // BGM by OtoLogic
     static private final String gameOverSoundFileName = "sound/DropsByWindow.mp3"; // please set proper music for gameover
+    static private final String itemGetSoundFileName = "sound/magical.mp3";
 
     public static void setMainClass(Class mainClass) {
         StageDB.mainClass = mainClass;
+    }
+
+    public static MediaPlayer getItemGetSound() {
+        try {
+            Media m = new Media(new File(itemGetSoundFileName).toURI().toString());
+            MediaPlayer mp = new MediaPlayer(m);
+            // mp.setCycleCount(MediaPlayer.INDEFINITE);
+            mp.setRate(1.0);
+            mp.setVolume(0.5);
+            itemGetSound.add(mp);
+            return mp;
+        } catch (Exception io) {
+            System.err.println(io.getMessage());
+            return null;
+        }
     }
 
     public static MediaPlayer getMainSound() {

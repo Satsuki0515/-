@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 public class MapGame extends Application {
   Stage stage;
 
+  public static boolean isGameOver = false;
+
   @Override
   public void start(Stage primaryStage) throws Exception {
     stage = primaryStage;

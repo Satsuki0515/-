@@ -17,6 +17,7 @@ public class MapGameController implements Initializable {
 
   public MapData mapData;
   public MoveChara chara;
+  public Label healthLabel;
   public GridPane mapGrid;
   public ImageView[] mapImageViews;
 
@@ -31,12 +32,19 @@ public class MapGameController implements Initializable {
     int cx = c.getPosX();
     int cy = c.getPosY();
     mapGrid.getChildren().clear();
+    loadImageView();
+
+    // 描画処理
+    healthLabel.setText("Current health: " + c.getHealth());
     for (int y = 0; y < mapData.getHeight(); y++) {
       for (int x = 0; x < mapData.getWidth(); x++) {
         int index = y * mapData.getWidth() + x;
         if (x == cx && y == cy) {
           mapGrid.add(c.getCharaImageView(), x, y);
+
         } else if (m.getMap(x, y) == MapData.TYPE_GOAL) {
+
+          // ゴールの描画処理
           if (x == cx && y == cy) {
             Label gameClearLabel = new Label("Game Clear!");
             mapGrid.add(gameClearLabel, x, y);
@@ -45,6 +53,7 @@ public class MapGameController implements Initializable {
             ImageView goalImageView = new ImageView(goalImage);
             mapGrid.add(goalImageView, x, y);
           }
+          
         } else {
           mapGrid.add(mapImageViews[index], x, y);
         }
@@ -102,7 +111,11 @@ public class MapGameController implements Initializable {
     @FXML
     public void func1ButtonAction(ActionEvent event) {
         try {
-            System.out.println("func1");
+            System.out.println("func1: GameOver");
+            chara.decreaseHealth(); // キャラクターの残機を減らす
+            if (chara.getHealth() < 0) {
+              MapGame.isGameOver = true;
+            }
             StageDB.getMainStage().hide();
             StageDB.getMainSound().stop();
             StageDB.getGameOverStage().show();
@@ -130,14 +143,18 @@ public class MapGameController implements Initializable {
         // Set the goal position (adjust x and y values accordingly)
         mapData.setGoal(19, 13);
         mapImageViews = new ImageView[mapData.getHeight() * mapData.getWidth()];
-        for (int y = 0; y < mapData.getHeight(); y++) {
-            for (int x = 0; x < mapData.getWidth(); x++) {
-                int index = y * mapData.getWidth() + x;
-                mapImageViews[index] = mapData.getImageView(x, y);
-            }
-        }
         drawMap(chara, mapData);
     }
+
+    public void loadImageView() {
+      for (int y = 0; y < mapData.getHeight(); y++) {
+        for (int x = 0; x < mapData.getWidth(); x++) {
+            int index = y * mapData.getWidth() + x;
+            mapImageViews[index] = mapData.getImageView(x, y);
+        }
+      }
+    }
+
     @FXML
     public void func3ButtonAction(ActionEvent event) {
         System.out.println("func3: Nothing to do");

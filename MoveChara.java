@@ -18,6 +18,8 @@ public class MoveChara {
   private int posX;
   private int posY;
 
+  private int health;
+
   private MapData mapData;
 
   private Image[][] charaImages;
@@ -49,6 +51,8 @@ public class MoveChara {
     posX = startX;
     posY = startY;
 
+    health = 1;
+
     setCharaDirection(TYPE_RIGHT); // start with right-direction
   }
 
@@ -73,7 +77,8 @@ public class MoveChara {
       return false;
     } else if (
       mapData.getMap(nextX, nextY) == MapData.TYPE_SPACE ||
-      mapData.getMap(nextX, nextY) == MapData.TYPE_GOAL
+      mapData.getMap(nextX, nextY) == MapData.TYPE_GOAL ||
+      mapData.getMap(nextX, nextY) == MapData.TYPE_ITEM
     ) {
       return true;
     }
@@ -88,6 +93,16 @@ public class MoveChara {
       posX += dx;
       posY += dy;
       System.out.println("chara[X,Y]:" + posX + "," + posY);
+
+      // キャラクターとアイテムの接触を判定する
+      if (mapData.getMap(posX, posY) == MapData.TYPE_ITEM) {
+        System.out.println("Got an item!");
+        health++; // 残機を追加
+        StageDB.getItemGetSound().play();
+        // アイテムをマップ上から削除
+        mapData.setMap(posX, posY, MapData.TYPE_SPACE);
+        mapData.setImageViews();
+      }
 
       // Check if the character reached the goal
       if (mapData.getMap(posX, posY) == MapData.TYPE_GOAL) {
@@ -115,6 +130,14 @@ public class MoveChara {
   // getter: y-positon of the cat
   public int getPosY() {
     return posY;
+  }
+
+  public int getHealth() {
+    return health;
+  }
+
+  public void decreaseHealth() {
+    health--;
   }
 
   // Show the cat animation
