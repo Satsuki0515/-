@@ -99,6 +99,7 @@ public class MapData {
     public void setImageViews() {
         for (int y = 0; y < height; y ++) {
             for (int x = 0; x < width; x++) {
+                if (maps[y][x] == TYPE_GOAL) continue; // ゴールの描画処理は他と少し違う処理をしているため、飛ばす
                 mapImageViews[y][x] = new ImageView(mapImages[maps[y][x]]);
             }
         }

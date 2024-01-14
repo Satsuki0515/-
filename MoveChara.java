@@ -96,6 +96,7 @@ public class MoveChara {
         StageDB.getItemGetSound().play();
         // アイテムをマップ上から削除
         mapData.setMap(posX, posY, MapData.TYPE_SPACE);
+        mapData.setImageViews();
       }
 
       // Check if the character reached the goal

@@ -31,6 +31,7 @@ public class MapGameController implements Initializable {
     int cx = c.getPosX();
     int cy = c.getPosY();
     mapGrid.getChildren().clear();
+    loadImageView();
 
     // 描画処理
     for (int y = 0; y < mapData.getHeight(); y++) {
@@ -136,14 +137,18 @@ public class MapGameController implements Initializable {
         // Set the goal position (adjust x and y values accordingly)
         mapData.setGoal(19, 13);
         mapImageViews = new ImageView[mapData.getHeight() * mapData.getWidth()];
-        for (int y = 0; y < mapData.getHeight(); y++) {
-            for (int x = 0; x < mapData.getWidth(); x++) {
-                int index = y * mapData.getWidth() + x;
-                mapImageViews[index] = mapData.getImageView(x, y);
-            }
-        }
         drawMap(chara, mapData);
     }
+
+    public void loadImageView() {
+      for (int y = 0; y < mapData.getHeight(); y++) {
+        for (int x = 0; x < mapData.getWidth(); x++) {
+            int index = y * mapData.getWidth() + x;
+            mapImageViews[index] = mapData.getImageView(x, y);
+        }
+      }
+    }
+
     @FXML
     public void func3ButtonAction(ActionEvent event) {
         System.out.println("func3: Nothing to do");
