@@ -131,6 +131,10 @@ public class MoveChara {
     return posY;
   }
 
+  public int getHealth() {
+    return health;
+  }
+
   // Show the cat animation
   private class ImageAnimation extends AnimationTimer {
 

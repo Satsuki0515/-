@@ -17,6 +17,7 @@ public class MapGameController implements Initializable {
 
   public MapData mapData;
   public MoveChara chara;
+  public Label healthLabel;
   public GridPane mapGrid;
   public ImageView[] mapImageViews;
 
@@ -34,6 +35,7 @@ public class MapGameController implements Initializable {
     loadImageView();
 
     // 描画処理
+    healthLabel.setText("Current health: " + c.getHealth());
     for (int y = 0; y < mapData.getHeight(); y++) {
       for (int x = 0; x < mapData.getWidth(); x++) {
         int index = y * mapData.getWidth() + x;
