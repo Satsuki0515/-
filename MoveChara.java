@@ -90,6 +90,12 @@ public class MoveChara {
       posY += dy;
       System.out.println("chara[X,Y]:" + posX + "," + posY);
 
+      // キャラクターとアイテムの接触を判定する
+      if (mapData.getMap(posX, posY) == MapData.TYPE_ITEM) {
+        System.out.println("Got an item!");
+        StageDB.getItemGetSound().play();
+      }
+
       // Check if the character reached the goal
       if (mapData.getMap(posX, posY) == MapData.TYPE_GOAL) {
         System.out.println("Game Clear!!");
