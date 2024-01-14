@@ -39,7 +39,11 @@ public class MapData {
     public void recreateNewMap() {
          fillMap(MapData.TYPE_WALL);
         digMap(1, 3, new Random());
-        placeItem(2, 1);
+
+        // アイテムを2，3個おく
+        Random rand = new Random();
+        int itemNum = rand.nextInt(2) + 2;
+        placeItem(itemNum);
     }
     // fill two-dimentional arrays with a given number (maps[y][x])
     private void fillMap(int type) {
@@ -105,8 +109,17 @@ public class MapData {
         setMap(x, y, MapData.TYPE_GOAL);
     }
 
-    public void placeItem(int x, int y) {
-        setMap(x, y, TYPE_ITEM);
+    public void placeItem(int itemNum) {
+        Random rand = new Random();
+        int counter = 0;
+        while (counter < itemNum) {
+            int rx = rand.nextInt(width - 2) + 1;
+            int ry = rand.nextInt(height - 2) + 1;
+            // マップ内のいずれかのSPACEをITEMに置き換える
+            if (maps[ry][rx] != TYPE_SPACE || (rx == 1 && ry == 1)) continue;
+            setMap(rx, ry, TYPE_ITEM);
+            counter++;
+        }
     }
 
     public int getHeight() {

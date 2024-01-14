@@ -40,6 +40,7 @@ public class MapGameController implements Initializable {
           mapGrid.add(c.getCharaImageView(), x, y);
 
         } else if (m.getMap(x, y) == MapData.TYPE_GOAL) {
+
           // ゴールの描画処理
           if (x == cx && y == cy) {
             Label gameClearLabel = new Label("Game Clear!");
@@ -49,6 +50,7 @@ public class MapGameController implements Initializable {
             ImageView goalImageView = new ImageView(goalImage);
             mapGrid.add(goalImageView, x, y);
           }
+          
         } else {
           mapGrid.add(mapImageViews[index], x, y);
         }
