@@ -31,12 +31,16 @@ public class MapGameController implements Initializable {
     int cx = c.getPosX();
     int cy = c.getPosY();
     mapGrid.getChildren().clear();
+
+    // 描画処理
     for (int y = 0; y < mapData.getHeight(); y++) {
       for (int x = 0; x < mapData.getWidth(); x++) {
         int index = y * mapData.getWidth() + x;
         if (x == cx && y == cy) {
           mapGrid.add(c.getCharaImageView(), x, y);
+
         } else if (m.getMap(x, y) == MapData.TYPE_GOAL) {
+          // ゴールの描画処理
           if (x == cx && y == cy) {
             Label gameClearLabel = new Label("Game Clear!");
             mapGrid.add(gameClearLabel, x, y);
