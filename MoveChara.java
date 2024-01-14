@@ -94,6 +94,8 @@ public class MoveChara {
       if (mapData.getMap(posX, posY) == MapData.TYPE_ITEM) {
         System.out.println("Got an item!");
         StageDB.getItemGetSound().play();
+        // アイテムをマップ上から削除
+        mapData.setMap(posX, posY, MapData.TYPE_SPACE);
       }
 
       // Check if the character reached the goal
