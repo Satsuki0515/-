@@ -5,12 +5,13 @@ import java.util.Random;
 public class MapData {
     public static final int TYPE_SPACE = 0;
     public static final int TYPE_WALL = 1;
-    public static final int TYPE_OTHERS = 2;
+    public static final int TYPE_ITEM = 2;
     public static final int TYPE_GOAL = 3; // Add a new constant for the goal
 
     private static final String mapImageFiles[] = {
             "GameImage/Space.png",
-            "GameImage/BrickWall.png"
+            "GameImage/BrickWall.png",
+            "GameImage/Heart.png"
     };
 
     private Image[] mapImages;
@@ -20,9 +21,9 @@ public class MapData {
     private int height; // height of the map
 
     MapData(int x, int y) {
-        mapImages = new Image[2];
+        mapImages = new Image[mapImageFiles.length];
         mapImageViews = new ImageView[y][x];
-        for (int i = 0; i < 2; i ++) {
+        for (int i = 0; i < mapImages.length; i ++) {
             mapImages[i] = new Image(mapImageFiles[i]);
         }
 
@@ -38,6 +39,7 @@ public class MapData {
     public void recreateNewMap() {
          fillMap(MapData.TYPE_WALL);
         digMap(1, 3, new Random());
+        placeItem(2, 1);
     }
     // fill two-dimentional arrays with a given number (maps[y][x])
     private void fillMap(int type) {
@@ -101,6 +103,10 @@ public class MapData {
     // Add a method to set the goal position
     public void setGoal(int x, int y) {
         setMap(x, y, MapData.TYPE_GOAL);
+    }
+
+    public void placeItem(int x, int y) {
+        setMap(x, y, TYPE_ITEM);
     }
 
     public int getHeight() {
