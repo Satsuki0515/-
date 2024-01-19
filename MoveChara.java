@@ -78,7 +78,8 @@ public class MoveChara {
     } else if (
       mapData.getMap(nextX, nextY) == MapData.TYPE_SPACE ||
       mapData.getMap(nextX, nextY) == MapData.TYPE_GOAL ||
-      mapData.getMap(nextX, nextY) == MapData.TYPE_ITEM
+      mapData.getMap(nextX, nextY) == MapData.TYPE_ITEM ||
+      mapData.getMap(nextX, nextY) == MapData.TYPE_SPECIALWALL
     ) {
       return true;
     }
@@ -103,6 +104,12 @@ public class MoveChara {
         mapData.setMap(posX, posY, MapData.TYPE_SPACE);
         mapData.setImageViews();
       }
+      
+      //ボーナスステージに入る
+      if (mapData.getMap(posX, posY) == MapData.TYPE_SPECIALWALL) {
+        System.out.println("Bonus Stage!!!");
+
+      }
 
       // Check if the character reached the goal
       if (mapData.getMap(posX, posY) == MapData.TYPE_GOAL) {
@@ -116,6 +123,8 @@ public class MoveChara {
       return false;
     }
   }
+
+ 
 
   // getter: direction of the cat
   public ImageView getCharaImageView() {

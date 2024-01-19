@@ -7,11 +7,14 @@ public class MapData {
     public static final int TYPE_WALL = 1;
     public static final int TYPE_ITEM = 2;
     public static final int TYPE_GOAL = 3; // Add a new constant for the goal
+    public static final int TYPE_SPECIALWALL = 4;
 
     private static final String mapImageFiles[] = {
             "GameImage/Space.png",
             "GameImage/BrickWall.png",
-            "GameImage/Heart.png"
+            "GameImage/Heart.png",
+            "png/goal.png",
+            "GameImage/BrickWallForSpecial.png"
     };
 
     private Image[] mapImages;
@@ -44,6 +47,8 @@ public class MapData {
         Random rand = new Random();
         int itemNum = rand.nextInt(2) + 2;
         placeItem(itemNum);
+        int WallNum = 1;
+        placeWall(WallNum);
     }
     // fill two-dimentional arrays with a given number (maps[y][x])
     private void fillMap(int type) {
@@ -120,6 +125,19 @@ public class MapData {
             if (maps[ry][rx] != TYPE_SPACE || (rx == 1 && ry == 1)) continue;
             setMap(rx, ry, TYPE_ITEM);
             counter++;
+        }
+    }
+
+    public void placeWall(int WallNum) {
+        Random rand2 = new Random();
+        int counter2 = 0;
+        while (counter2 < WallNum) {
+            int rx2 = rand2.nextInt(width - 2) + 1;
+            int ry2 = rand2.nextInt(height - 2) + 1;
+            
+            if (maps[ry2][rx2] != TYPE_WALL || (rx2 == 1 && ry2 == 1)) continue;
+            setMap(rx2, ry2, TYPE_SPECIALWALL);
+            counter2++;
         }
     }
 
