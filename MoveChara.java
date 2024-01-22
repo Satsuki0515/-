@@ -10,10 +10,10 @@ public class MoveChara {
   public static final int TYPE_RIGHT = 2;
   public static final int TYPE_UP = 3;
 
-    private final String[] directions = { "Down", "Left", "Right", "Up" };
-    private final String[] animationNumbers = { "1", "2", "3" };
-    private final String pngPathPre = "png/otaku";
-    private final String pngPathSuf = ".png";
+  private final String[] directions = { "Down", "Left", "Right", "Up" };
+  private final String[] animationNumbers = { "1", "2", "3" };
+  private final String pngPathPre = "png/otaku";
+  private final String pngPathSuf = ".png";
 
   private int posX;
   private int posY;
@@ -104,11 +104,10 @@ public class MoveChara {
         mapData.setMap(posX, posY, MapData.TYPE_SPACE);
         mapData.setImageViews();
       }
-      
+
       //ボーナスステージに入る
       if (mapData.getMap(posX, posY) == MapData.TYPE_SPECIALWALL) {
         System.out.println("Bonus Stage!!!");
-
       }
 
       // Check if the character reached the goal
@@ -123,8 +122,6 @@ public class MoveChara {
       return false;
     }
   }
-
- 
 
   // getter: direction of the cat
   public ImageView getCharaImageView() {

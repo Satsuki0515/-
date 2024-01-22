@@ -21,10 +21,10 @@ public class MapGameController implements Initializable {
   public GridPane mapGrid;
   public ImageView[] mapImageViews;
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        initializeMap();
-    }
+  @Override
+  public void initialize(URL url, ResourceBundle rb) {
+    initializeMap();
+  }
 
   // Draw the map
   //changed code
@@ -41,9 +41,7 @@ public class MapGameController implements Initializable {
         int index = y * mapData.getWidth() + x;
         if (x == cx && y == cy) {
           mapGrid.add(c.getCharaImageView(), x, y);
-
         } else if (m.getMap(x, y) == MapData.TYPE_GOAL) {
-
           // ゴールの描画処理
           if (x == cx && y == cy) {
             Label gameClearLabel = new Label("Game Clear!");
@@ -53,7 +51,6 @@ public class MapGameController implements Initializable {
             ImageView goalImageView = new ImageView(goalImage);
             mapGrid.add(goalImageView, x, y);
           }
-          
         } else {
           mapGrid.add(mapImageViews[index], x, y);
         }
@@ -108,57 +105,55 @@ public class MapGameController implements Initializable {
     drawMap(chara, mapData);
   }
 
-    @FXML
-    public void func1ButtonAction(ActionEvent event) {
-        try {
-            System.out.println("func1: GameOver");
-            chara.decreaseHealth(); // キャラクターの残機を減らす
-            if (chara.getHealth() < 0) {
-              MapGame.isGameOver = true;
-            }
-            StageDB.getMainStage().hide();
-            StageDB.getMainSound().stop();
-            StageDB.getGameOverStage().show();
-            StageDB.getGameOverSound().play();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
+  @FXML
+  public void func1ButtonAction(ActionEvent event) {
+    try {
+      System.out.println("func1: GameOver");
+      chara.decreaseHealth(); // キャラクターの残機を減らす
+      if (chara.getHealth() < 0) {
+        MapGame.isGameOver = true;
+      }
+      StageDB.getMainStage().hide();
+      StageDB.getMainSound().stop();
+      StageDB.getGameOverStage().show();
+      StageDB.getGameOverSound().play();
+    } catch (Exception ex) {
+      System.out.println(ex.getMessage());
     }
-    
-    @FXML
-    public void func2ButtonAction(ActionEvent event) {
-        try {
-            initializeMap();
-            System.out.println("func2: Recreate new map");
-            
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            
-        }
-        
-    }
-    private void initializeMap() {
-        mapData = new MapData(21, 15);
-        chara = new MoveChara(1, 1, mapData);
-        // Set the goal position (adjust x and y values accordingly)
-        mapData.setGoal(19, 13);
-        mapImageViews = new ImageView[mapData.getHeight() * mapData.getWidth()];
-        drawMap(chara, mapData);
-    }
+  }
 
-    public void loadImageView() {
-      for (int y = 0; y < mapData.getHeight(); y++) {
-        for (int x = 0; x < mapData.getWidth(); x++) {
-            int index = y * mapData.getWidth() + x;
-            mapImageViews[index] = mapData.getImageView(x, y);
-        }
+  @FXML
+  public void func2ButtonAction(ActionEvent event) {
+    try {
+      initializeMap();
+      System.out.println("func2: Recreate new map");
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
+  public void initializeMap() {
+    mapData = new MapData(21, 15);
+    chara = new MoveChara(1, 1, mapData);
+    // Set the goal position (adjust x and y values accordingly)
+    mapData.setGoal(19, 13);
+    mapImageViews = new ImageView[mapData.getHeight() * mapData.getWidth()];
+    drawMap(chara, mapData);
+  }
+
+  public void loadImageView() {
+    for (int y = 0; y < mapData.getHeight(); y++) {
+      for (int x = 0; x < mapData.getWidth(); x++) {
+        int index = y * mapData.getWidth() + x;
+        mapImageViews[index] = mapData.getImageView(x, y);
       }
     }
+  }
 
-    @FXML
-    public void func3ButtonAction(ActionEvent event) {
-        System.out.println("func3: Nothing to do");
-    }
+  @FXML
+  public void func3ButtonAction(ActionEvent event) {
+    System.out.println("func3: Nothing to do");
+  }
 
   @FXML
   public void func4ButtonAction(ActionEvent event) {
