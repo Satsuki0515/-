@@ -10,10 +10,10 @@ public class MoveChara {
   public static final int TYPE_RIGHT = 2;
   public static final int TYPE_UP = 3;
 
-    private final String[] directions = { "Down", "Left", "Right", "Up" };
-    private final String[] animationNumbers = { "1", "2", "3" };
-    private final String pngPathPre = "png/otaku";
-    private final String pngPathSuf = ".png";
+  private final String[] directions = { "Down", "Left", "Right", "Up" };
+  private final String[] animationNumbers = { "1", "2", "3" };
+  private final String pngPathPre = "png/otaku";
+  private final String pngPathSuf = ".png";
 
   private int posX;
   private int posY;
@@ -78,7 +78,8 @@ public class MoveChara {
     } else if (
       mapData.getMap(nextX, nextY) == MapData.TYPE_SPACE ||
       mapData.getMap(nextX, nextY) == MapData.TYPE_GOAL ||
-      mapData.getMap(nextX, nextY) == MapData.TYPE_ITEM
+      mapData.getMap(nextX, nextY) == MapData.TYPE_ITEM ||
+      mapData.getMap(nextX, nextY) == MapData.TYPE_SPECIALWALL
     ) {
       return true;
     }
@@ -102,6 +103,16 @@ public class MoveChara {
         // アイテムをマップ上から削除
         mapData.setMap(posX, posY, MapData.TYPE_SPACE);
         mapData.setImageViews();
+      }
+
+      //ボーナスステージに入る
+      if (mapData.getMap(posX, posY) == MapData.TYPE_SPECIALWALL) {
+        System.out.println("Bonus Stage!!!");
+        mapData.createBonusMap();
+        // 座標を初期位置に戻す
+        posX = 1;
+        posY = 1;
+        setCharaDirection(TYPE_RIGHT);
       }
 
       // Check if the character reached the goal
