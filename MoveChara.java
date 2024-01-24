@@ -112,6 +112,7 @@ public class MoveChara {
         // 座標を初期位置に戻す
         posX = 1;
         posY = 1;
+        setCharaDirection(TYPE_RIGHT);
       }
 
       // Check if the character reached the goal
