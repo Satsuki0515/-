@@ -34,9 +34,7 @@ public class MapGameController implements Initializable {
     }
 
     public void setupCountdown() {
-        timeLabel.setText("time: " + remainingTime);
         healthLabel.setText("Current health: " + chara.getHealth());
-        
 
         timeline = new Timeline(new KeyFrame(javafx.util.Duration.seconds(1), event -> {
             remainingTime--;
