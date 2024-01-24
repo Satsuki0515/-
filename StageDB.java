@@ -19,6 +19,7 @@ class StageDB {
     static private Stage gameOverStage = null;
     static private MediaPlayer mainSound = null;
     static private MediaPlayer gameOverSound = null;
+    static private int itemNum = 2;
     static private ArrayList<MediaPlayer> itemGetSound = new ArrayList<>();
     static private Class mainClass;
     static private final String mainSoundFileName = "sound/JoyToTheWorld.mp3"; // BGM by OtoLogic
@@ -106,5 +107,13 @@ class StageDB {
             }
         }
         return gameOverStage;
+    }
+
+    public static int getItemNum() {
+        return itemNum;
+    }
+
+    public static void setItemNum(int n) {
+        itemNum = n;
     }
 }

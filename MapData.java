@@ -46,7 +46,7 @@ public class MapData {
 
     // アイテムを2，3個おく
     Random rand = new Random();
-    int itemNum = rand.nextInt(2) + 2;
+    int itemNum = rand.nextInt(2) + StageDB.getItemNum();
     placeItem(itemNum);
     int WallNum = 1;
     placeWall(WallNum);
@@ -55,10 +55,6 @@ public class MapData {
   private static MapData mapData;
   private static MoveChara chara;
   private static MapGameController MapGameController;
-
-  public void BonusStage() {
-   
-  }
 
   // fill two-dimentional arrays with a given number (maps[y][x])
   private void fillMap(int type) {
