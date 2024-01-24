@@ -47,7 +47,7 @@ public class MapData {
 
     // アイテムを2，3個おく
     Random rand = new Random();
-    int itemNum = rand.nextInt(2) + 2;
+    int itemNum = rand.nextInt(2) + StageDB.getItemNum();
     placeItem(itemNum);
     int WallNum = 1;
     placeWall(WallNum);
