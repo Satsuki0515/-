@@ -54,8 +54,7 @@ public class MapGameController implements Initializable {
     }
 
     private void handleTimeUp() {
-        func1ButtonAction(null);
-        timeline.stop();  // タイマー停止
+        moveToGameOver();
     }
 
     public void drawMap(MoveChara c, MapData m) {
@@ -83,6 +82,25 @@ public class MapGameController implements Initializable {
                     mapGrid.add(mapImageViews[index], x, y);
                 }
             }
+        }
+    }
+
+    public void moveToGameOver() {
+        try {
+            System.out.println("func1: GameOver");
+            chara.decreaseHealth();
+            remainingTime = 60;
+            timeline.stop();
+            if (chara.getHealth() < 0) {
+                MapGame.isGameOver = true;
+            }
+
+            StageDB.getMainStage().hide();
+            StageDB.getMainSound().stop();
+            StageDB.getGameOverStage().show();
+            StageDB.getGameOverSound().play();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -130,21 +148,7 @@ public class MapGameController implements Initializable {
 
     @FXML
     public void func1ButtonAction(ActionEvent event) {
-        try {
-            System.out.println("func1: GameOver");
-            chara.decreaseHealth();
-            remainingTime = 60;
-            if (chara.getHealth() < 0) {
-                MapGame.isGameOver = true;
-            }
-
-            StageDB.getMainStage().hide();
-            StageDB.getMainSound().stop();
-            StageDB.getGameOverStage().show();
-            StageDB.getGameOverSound().play();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
+        moveToGameOver();
     }
 
     @FXML
@@ -152,7 +156,6 @@ public class MapGameController implements Initializable {
         try {
             initializeMap();
             System.out.println("func2: Recreate new map");
-
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -184,7 +187,7 @@ public class MapGameController implements Initializable {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        
+
     }
 
     @FXML
@@ -196,4 +199,3 @@ public class MapGameController implements Initializable {
         System.out.println("Action: " + actionString);
     }
 }
-
