@@ -1,12 +1,16 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.io.File;
+
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -15,6 +19,7 @@ import javafx.scene.media.MediaPlayer;
 
 class StageDB {
 
+    static private Timeline timeline = null;
     static private Stage mainStage = null;
     static private Stage gameOverStage = null;
     static private MediaPlayer mainSound = null;
@@ -27,6 +32,16 @@ class StageDB {
 
     public static void setMainClass(Class mainClass) {
         StageDB.mainClass = mainClass;
+    }
+
+    public static Timeline getTimeline() {
+        return timeline;
+    }
+
+    public static Timeline setTimeline(KeyFrame key) {
+        timeline = new Timeline(key);
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        return timeline;
     }
 
     public static MediaPlayer getItemGetSound() {

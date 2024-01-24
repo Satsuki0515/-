@@ -25,7 +25,6 @@ public class MapGameController implements Initializable {
     public ImageView[] mapImageViews;
 
     private int remainingTime = 60;
-    private Timeline timeline;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -36,7 +35,7 @@ public class MapGameController implements Initializable {
     public void setupCountdown() {
         healthLabel.setText("Current health: " + chara.getHealth());
 
-        timeline = new Timeline(new KeyFrame(javafx.util.Duration.seconds(1), event -> {
+        KeyFrame key = new KeyFrame(javafx.util.Duration.seconds(1), event -> {
             remainingTime--;
             updateTimeLabel();
 
@@ -44,9 +43,10 @@ public class MapGameController implements Initializable {
                 // 制限時間終了時のアクション
                 handleTimeUp();
             }
-        }));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
+        });
+
+        StageDB.setTimeline(key);
+        StageDB.getTimeline().play();
     }
 
     private void updateTimeLabel() {
@@ -90,7 +90,7 @@ public class MapGameController implements Initializable {
             System.out.println("func1: GameOver");
             chara.decreaseHealth();
             remainingTime = 60;
-            timeline.stop();
+            StageDB.getTimeline().stop();
             if (chara.getHealth() < 0) {
                 MapGame.isGameOver = true;
             }
