@@ -19,6 +19,7 @@
 			<Button text="func3" prefWidth="100" onAction="#func3ButtonAction"/>
 			<Button text="func4" prefWidth="100" onAction="#func4ButtonAction"/>
       <Label fx:id="healthLabel" text="Current health: 1"/>
+      <Label fx:id="timeLabel" text=" Time Limit: 60"/>
       </children>
     </HBox>
     <GridPane fx:id="mapGrid" prefWidth="360" prefHeight="360" >
