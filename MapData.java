@@ -7,8 +7,9 @@ public class MapData {
   public static final int TYPE_SPACE = 0;
   public static final int TYPE_WALL = 1;
   public static final int TYPE_ITEM = 2;
-  public static final int TYPE_GOAL = 3; // Add a new constant for the goal
+  public static final int TYPE_GOAL = 3;
   public static final int TYPE_SPECIALWALL = 4;
+  public static final int TYPE_BONUSWALL = 5;
 
   private static final String mapImageFiles[] = {
     "GameImage/Space.png",
@@ -16,6 +17,7 @@ public class MapData {
     "GameImage/Heart.png",
     "png/goal.png",
     "GameImage/BrickWallForSpecial.png",
+    "GameImage/MossyStoneWall.png"
   };
 
   private Image[] mapImages;
@@ -36,20 +38,35 @@ public class MapData {
     maps = new int[y][x];
 
     recreateNewMap();
-
-    setImageViews();
   }
 
+  // 通常ステージの作成
   public void recreateNewMap() {
     fillMap(MapData.TYPE_WALL);
     digMap(1, 3, new Random());
 
     // アイテムを2，3個おく
     Random rand = new Random();
-    int itemNum = rand.nextInt(2) + StageDB.getItemNum();
+    int itemNum = rand.nextInt(2) + 2;
     placeItem(itemNum);
     int WallNum = 1;
     placeWall(WallNum);
+
+    setImageViews();
+  }
+
+  // ボーナスステージの作成
+  public void createBonusMap() {
+    fillMap(TYPE_BONUSWALL);
+    digMap(1, 3, new Random());
+
+    // アイテムを5,6個おく
+    Random rand = new Random();
+    int itemNum = rand.nextInt(2) + 5;
+    placeItem(itemNum);
+
+    setGoal(19, 13);
+    setImageViews();
   }
 
   private static MapData mapData;
@@ -81,7 +98,8 @@ public class MapData {
     for (int i = 0; i < dl.length; i++) {
       int dx = dl[i][0];
       int dy = dl[i][1];
-      if (getMap(x + dx * 2, y + dy * 2) == MapData.TYPE_WALL) {
+      int dm = getMap(x + dx * 2, y + dy * 2);
+      if (dm == MapData.TYPE_WALL || dm == MapData.TYPE_BONUSWALL) {
         setMap(x + dx, y + dy, MapData.TYPE_SPACE);
         digMap(x + dx * 2, y + dy * 2, random);
       }

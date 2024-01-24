@@ -108,6 +108,10 @@ public class MoveChara {
       //ボーナスステージに入る
       if (mapData.getMap(posX, posY) == MapData.TYPE_SPECIALWALL) {
         System.out.println("Bonus Stage!!!");
+        mapData.createBonusMap();
+        // 座標を初期位置に戻す
+        posX = 1;
+        posY = 1;
       }
 
       // Check if the character reached the goal
