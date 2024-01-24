@@ -16,12 +16,15 @@ public class MapGameController implements Initializable {
 
     public MapData mapData;
     public MoveChara chara;
+
+    // FXML elements
     public Label healthLabel;
+    public Label timeLabel;
     public GridPane mapGrid;
+
     public ImageView[] mapImageViews;
 
     private int remainingTime = 60;
-    private Label timeLabel;
     private Timeline timeline;
 
     @Override
@@ -31,7 +34,7 @@ public class MapGameController implements Initializable {
     }
 
     public void setupCountdown() {
-        timeLabel = new Label("Time Limit: " + remainingTime);
+        timeLabel.setText("time: " + remainingTime);
         healthLabel.setText("Current health: " + chara.getHealth());
         
 
