@@ -133,6 +133,7 @@ public class MapGameController implements Initializable {
         try {
             System.out.println("func1: GameOver");
             chara.decreaseHealth();
+            remainingTime = 60;
             if (chara.getHealth() < 0) {
                 MapGame.isGameOver = true;
             }
