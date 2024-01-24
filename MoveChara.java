@@ -112,7 +112,10 @@ public class MoveChara {
         // 座標を初期位置に戻す
         posX = 1;
         posY = 1;
+<<<<<<< HEAD
         setCharaDirection(TYPE_RIGHT);
+=======
+>>>>>>> f624534 (feat: Allow chara to go to the bonus map)
       }
 
       // Check if the character reached the goal
